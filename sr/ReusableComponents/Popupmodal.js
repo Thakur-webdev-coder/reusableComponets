@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     // margin: 20,
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
     width: '80%',
     paddingVertical: 35,
     borderRadius: 20,

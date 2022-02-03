@@ -12,6 +12,8 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
         placeholder={placeholder}
         placeholderTextColor="black"
         style={styles.input}
+
+        // autoCapitalize="none"
       />
     </View>
   );
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: 'black',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 25,
   },
   input: {
     // alignItems: 'center',

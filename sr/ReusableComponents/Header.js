@@ -1,13 +1,13 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-const Header = ({text, logo, icon}) => (
+const Header = ({text, logo, icon, onPress}) => (
   <View style={styles.container}>
-    <Image source={logo} style={styles.logoStyle} />
-    <Text style={styles.textStyle}>{text}</Text>
     <View style={styles.iconStyle}>
-      <TouchableOpacity>{icon}</TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>{icon}</TouchableOpacity>
     </View>
+    <Text style={styles.textStyle}>{text}</Text>
+    <Image source={logo} style={styles.logoStyle} />
   </View>
 );
 
@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   logoStyle: {
-    height: '100%',
+    height: '150%',
     width: '15%',
     // paddingLeft: 10,
   },
   textStyle: {
     color: 'black',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 25,
     // paddingLeft: 30,
     fontWeight: 'bold',
   },

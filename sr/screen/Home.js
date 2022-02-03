@@ -5,110 +5,99 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomInput from '../ReusableComponents/CustomInput';
 import CustomBtn from '../ReusableComponents/CustomBtn';
 import CustomModal from '../ReusableComponents/Popupmodal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       Logo: require('../assets/images/logo1.jpeg'),
-      icon: <AntDesign name="menu-fold" size={30} color="#820de4" />,
+      icon: <AntDesign name="back" size={30} color="#820de4" />,
       username: '',
       email: '',
       password: '',
       visible: 'false',
-      message: 'false',
+      message: '',
       success: '',
       toggleModal: '',
     };
   }
-  handleSignIn = () => {
-    // console.log('handling Sign In');
-    // Alert.alert('you clicked on sign in button');
-    const {username, password, email} = this.state;
-    if (username === '') {
-      // alert('Plaese fill username');
-      this.setState({visible: true, message: 'please fill user name'});
-      console.log(' username error handling');
-      return false;
-    } else if (email === '') {
-      this.setState({visible: true, message: 'please fill you email address'});
-      console.log(' email error handling');
-      return false;
-    } else if (password === '') {
-      this.setState({visible: true, message: 'please fill password'});
-      console.log(' password error handling');
-      return false;
-    }
-    return true;
+
+  handleExlorebtn = () => {
+    console.log('exlore your limits');
   };
-  handleSignInbtn = () => {
-    if (this.handleSignIn()) {
-      this.setState({visible: true, message: 'You signed in Sucessfully'});
-      console.log(' You signed in Sucessfully');
-      // alert('login succesfully');
+  handleGetItem = () => {
+    try {
+      AsyncStorage.getItem('firstname').then(value => {
+        if (value != null) {
+          this.setState({firstname: value});
+        }
+      });
+    } catch (error) {
+      alert('Failed to feth username');
+    }
+
+    try {
+      AsyncStorage.getItem('email').then(value => {
+        if (value != null) {
+          this.setState({email: value});
+        }
+      });
+    } catch (e) {
+      alert('Failed to fetch the data to the storage ');
     }
   };
-  toggleModal = () => {
-    this.setState({visible: !this.state.visible});
-  };
-  // handleChangeInput(text, type) {}
+
+  componentDidMount() {
+    this.handleGetItem();
+  }
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#0606d3'}}>
         <View>
           <Header
             logo={this.state.Logo}
             text="welcome on this Site"
             icon={this.state.icon}
+            onPress={() => this.props.navigation.goBack()}
           />
         </View>
         <View style={styles.mainarea}>
-          <Text style={styles.mainareaHeaderText}>Let's Start Exploring</Text>
+          <Text style={styles.mainareaHeaderText}>Home Page</Text>
         </View>
         <View style={styles.mainfield}>
           <View style={styles.inputarea}>
             <CustomInput
               placeholder="username"
-              value={this.state.name}
+              value={this.state.firstname}
               // setValue={text => this.handleChangeInput(text, 'username')}
-              setValue={value => this.setState({username: value})}
+              // setValue={value => this.setState({username: value})}
             />
           </View>
           <View style={styles.inputarea}>
             <CustomInput
               placeholder="Email"
               value={this.state.email}
-              setValue={value => this.setState({email: value})}
+              // setValue={value => this.setState({email: value})}
             />
           </View>
-          <View style={styles.inputarea}>
-            <CustomInput
-              placeholder="Password"
-              secureTextEntry={true}
-              value={this.state.password}
-              setValue={value => this.setState({password: value})}
-            />
+          <View style={{paddingVertical: 40}}>
+            <Text style={styles.mainareaHeaderText}>Welcome User</Text>
           </View>
         </View>
         <View style={styles.mainfieldbtn}>
           <View style={styles.inputarea}>
             <CustomBtn
-              text="SignIn"
+              text="Let's start Exploring"
               textcolor="black"
               bgcolor="yellow"
-              onPress={() => this.handleSignInbtn()}
+              onPress={() => this.handleExlorebtn()}
             />
           </View>
         </View>
         <CustomModal
           visible={this.state.visible}
-          // toggle={
-          //   () => console.log('Modal has been closed')
-          //   //   // this.setState({visible: !this.state.visible});
-          // }
           message={this.state.message}
-          // success={this.state.sucess}
-          // text="you signed in Succesfully"
           onPress={() => this.setState({visible: !this.state.visible})}
         />
       </View>
@@ -122,21 +111,21 @@ const styles = StyleSheet.create({
   },
   mainareaHeaderText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   inputarea: {
     width: '95%',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 25,
   },
   mainfield: {
     alignItems: 'center',
   },
   mainfieldbtn: {
     alignItems: 'center',
-    paddingVertical: '40%',
+    paddingVertical: '25%',
   },
 });
 
